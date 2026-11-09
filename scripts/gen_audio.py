@@ -14,6 +14,7 @@ Chạy lại thì bỏ qua file đã có, nên có thể dừng giữa chừng r
 """
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -35,6 +36,27 @@ def fnv1a(s: str) -> str:
         h ^= b
         h = (h * 0x01000193) & 0xFFFFFFFF
     return f"{h:08x}"
+
+
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+
+
+def two(n: int) -> str:
+    if n < 20:
+        return ONES[n]
+    return TENS[n // 10] + ("-" + ONES[n % 10] if n % 10 else "")
+
+
+def say_text(lang: str, text: str) -> str:
+    """Chuẩn hóa câu trước khi đọc (tên file vẫn tính theo câu gốc)."""
+    if lang != "en":
+        return text
+    text = re.sub(r"\s/\s", ". ", text)
+    # Năm 1900–2099 đọc theo cặp: 2023 → twenty twenty-three
+    text = re.sub(r"\b(19|20)(\d\d)\b", lambda m: f"{two(int(m.group(1)))} {'hundred' if m.group(2) == '00' else ('oh ' + ONES[int(m.group(2))] if m.group(2)[0] == '0' else two(int(m.group(2))))}", text)
+    text = re.sub(r"\b\d{1,2}\b", lambda m: two(int(m.group(0))), text)
+    return text
 
 
 def engine(models: str, name: str):
@@ -67,7 +89,7 @@ def main():
         model, sid, speed = VOICE[lang]
         if model not in engines:
             engines[model] = engine(models, model)
-        a = engines[model].generate(text, sid=sid, speed=speed)
+        a = engines[model].generate(say_text(lang, text), sid=sid, speed=speed)
         if len(a.samples) == 0:
             print("bỏ qua (không tạo được âm thanh):", lang, text, flush=True)
             continue
