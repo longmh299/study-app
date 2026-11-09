@@ -5,6 +5,7 @@
 //  - Chrome Android đôi khi để bộ đọc ở trạng thái tạm dừng.
 //  - Trình duyệt trong app (Zalo, Facebook, Messenger…) thường không hỗ trợ đọc to.
 import { DATA, type Lang } from "./data";
+import { hasFile, playFile, stopFile } from "./audio";
 
 let voices: SpeechSynthesisVoice[] = [];
 const listeners = new Set<() => void>();
@@ -90,7 +91,24 @@ function say(text: string, L: Lang, rate: number) {
   return !!v;
 }
 
+/** Dừng mọi âm thanh đang phát. */
+export function stopSpeaking() {
+  stopFile();
+  try { if (supported()) window.speechSynthesis.cancel(); } catch { /* bỏ qua */ }
+}
+
 export function speak(text: string, L: Lang, rate: number, warn?: (msg: string) => void) {
+  // Ưu tiên file âm thanh tạo sẵn; câu nào chưa có file mới dùng giọng đọc của máy
+  if (hasFile(text, L)) {
+    try { if (supported()) window.speechSynthesis.cancel(); } catch { /* bỏ qua */ }
+    playFile(text, L, rate).then((ok) => { if (!ok) speakTTS(text, L, rate, warn); });
+    return;
+  }
+  stopFile();
+  speakTTS(text, L, rate, warn);
+}
+
+function speakTTS(text: string, L: Lang, rate: number, warn?: (msg: string) => void) {
   if (!supported()) {
     const app = inAppBrowser();
     warn?.(app ? `Trình duyệt trong ${app} không đọc to được. Hãy mở bằng Chrome hoặc Safari.` : "Trình duyệt này không hỗ trợ đọc to.");

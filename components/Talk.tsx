@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { DIALOGUES, show, type Dialogue } from "@/lib/content/dialogues";
 import { canListen } from "@/lib/listen";
+import { stopSpeaking } from "@/lib/speech";
 import { useStore } from "@/lib/store";
 import { Chips, MicCheck, SpeakBtn } from "./ui";
 import Speaking from "./Speaking";
@@ -60,7 +61,7 @@ export function DialogueView({ d, onBack, embedded }: { d: Dialogue; onBack?: ()
   const [scores, setScores] = useState<Record<number, number>>({});
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const stopAll = () => { if (timer.current) clearTimeout(timer.current); setPlaying(-1); try { speechSynthesis.cancel(); } catch { /* */ } };
+  const stopAll = () => { if (timer.current) clearTimeout(timer.current); setPlaying(-1); stopSpeaking(); };
   useEffect(() => stopAll, []);
 
   // Đọc lần lượt từng câu, ước lượng thời gian theo độ dài câu

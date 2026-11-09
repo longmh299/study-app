@@ -30,6 +30,20 @@ export function useStore() {
 
 const PUSH_DELAY = 1500; // gom nhiều lần chấm điểm thành 1 lần ghi để tiết kiệm request
 
+/** Dịch lỗi Supabase thường gặp sang hướng dẫn sửa bằng tiếng Việt. */
+function explain(msg: string) {
+  const m = msg.toLowerCase();
+  if (m.includes("progress") && (m.includes("does not exist") || m.includes("schema cache") || m.includes("could not find")))
+    return "Chưa tạo bảng dữ liệu. Vào Supabase › SQL Editor, dán toàn bộ file supabase/schema.sql rồi bấm Run.";
+  if (m.includes("row-level security") || m.includes("permission denied"))
+    return "Supabase từ chối ghi dữ liệu. Hãy chạy lại file supabase/schema.sql để tạo đúng quyền (Row Level Security).";
+  if (m.includes("jwt") || m.includes("invalid api key") || m.includes("no api key"))
+    return "Sai URL hoặc key Supabase. Kiểm tra lại 2 biến môi trường trên Vercel rồi Redeploy.";
+  if (m.includes("failed to fetch") || m.includes("network"))
+    return "Mất kết nối mạng. App sẽ tự lưu lại khi có mạng.";
+  return msg;
+}
+
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [S, setS] = useState<State>(DEF);
   const [ready, setReady] = useState(false);
@@ -64,7 +78,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase
       .from("progress")
       .upsert({ user_id: u.id, data: s, updated_at: new Date().toISOString() });
-    if (error) { setSync("error"); setSyncError(error.message); lastPushed.current = -1; }
+    if (error) { setSync("error"); setSyncError(explain(error.message)); lastPushed.current = -1; }
     else { setSync("saved"); setSyncError(""); }
   }, []);
 
@@ -72,7 +86,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     if (!supabase) return;
     setSync("saving");
     const { data, error } = await supabase.from("progress").select("data").eq("user_id", u.id).maybeSingle();
-    if (error) { setSync("error"); setSyncError(error.message); return; }
+    if (error) { setSync("error"); setSyncError(explain(error.message)); return; }
     const merged = data?.data ? merge(sRef.current, normalize(data.data)) : sRef.current;
     pulled.current = true;
     setS(merged);
@@ -110,6 +124,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => push(sRef.current, u), PUSH_DELAY);
   }, [S, ready, push]);
+
+  // Có mạng trở lại hoặc mở lại tab: thử đồng bộ lại nếu lần trước lỗi
+  useEffect(() => {
+    const retry = () => {
+      const u = userRef.current;
+      if (!u || document.visibilityState === "hidden") return;
+      if (!pulled.current) pull(u);
+      else if (sRef.current.u !== lastPushed.current) push(sRef.current, u);
+    };
+    window.addEventListener("online", retry);
+    document.addEventListener("visibilitychange", retry);
+    return () => { window.removeEventListener("online", retry); document.removeEventListener("visibilitychange", retry); };
+  }, [pull, push]);
 
   // Rời trang / tắt màn hình: đẩy nốt phần chưa lưu
   useEffect(() => {
