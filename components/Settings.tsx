@@ -72,6 +72,9 @@ export default function Settings() {
             Tiếng Anh: <b>{ven ? ven.name : "chưa có"}</b><br />
             Tiếng Trung: <b>{vzh ? vzh.name : "chưa có"}</b>
           </div>
+          <p className="muted small m0">
+            Không nghe thấy tiếng? Kiểm tra: tăng âm lượng, tắt gạt im lặng trên iPhone, và mở trang bằng Chrome hoặc Safari (không mở trong Zalo, Facebook).
+          </p>
           {!vzh && (
             <p className="muted small m0">
               Thêm giọng tiếng Trung miễn phí: Windows vào Settings › Time &amp; Language › Speech › Add voices › Chinese (Simplified).
