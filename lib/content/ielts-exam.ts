@@ -1,13 +1,15 @@
 // Đề thi thử IELTS tự biên soạn: bài đọc, câu hỏi, đề Writing. (Speaking dùng PART1, PART2 trong ielts.ts.)
 // Nội dung bài đọc là văn bản tự viết theo định dạng IELTS, không lấy từ đề thi thật.
+import { MORE_PASSAGES } from "./ielts-passages";
 
 export type RQ =
   | { k: "tfng"; q: string; a: "TRUE" | "FALSE" | "NOT GIVEN"; why: string }
+  | { k: "ynng"; q: string; a: "YES" | "NO" | "NOT GIVEN"; why: string }
   | { k: "mc"; q: string; opts: string[]; a: number; why: string };
 
 export interface Passage { id: string; title: string; text: string[]; qs: RQ[] }
 
-export const PASSAGES: Passage[] = [
+const BASE: Passage[] = [
   {
     id: "urban-farming", title: "Farming in the City",
     text: [
@@ -81,6 +83,8 @@ export const PASSAGES: Passage[] = [
     ],
   },
 ];
+
+export const PASSAGES: Passage[] = [...BASE, ...MORE_PASSAGES];
 
 export interface Task1 { id: string; prompt: string; head: string[]; rows: (string | number)[][]; unit: string }
 

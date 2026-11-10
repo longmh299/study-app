@@ -170,7 +170,8 @@ function IeltsAuto({ part, onBack }: { part: "l" | "r"; onBack: () => void }) {
             <ul className="steps">
               <li>3 bài đọc ngẫu nhiên trong {PASSAGES.length} bài, mỗi bài 7 câu: True / False / Not Given và trắc nghiệm.</li>
               <li>30 phút (đề thật: 60 phút cho 40 câu). Bấm “Bài đọc” để xem lại đoạn văn.</li>
-              <li>Not Given là khi bài đọc không nhắc đến thông tin đó, đừng dùng hiểu biết riêng để suy luận.</li>
+              <li>Not Given là khi bài đọc không nhắc đến thông tin đó, đừng dùng hiểu biết riêng để suy luận. TRUE/FALSE hỏi về thông tin, YES/NO hỏi về quan điểm của tác giả.</li>
+              <li>Các đoạn được đánh dấu A, B, C, D cho dạng câu hỏi “đoạn nào nói về…”.</li>
             </ul>
           )}
           <button type="button" className="btn primary wide" onClick={start}>Bắt đầu làm bài</button>
@@ -248,7 +249,7 @@ function Runner({ qs, lang, minutes, passages, title, onSubmit, onQuit }: { qs: 
             <button type="button" className="row between plain" onClick={() => setShowP(!showP)}>
               <b>{passage.title}</b><span className="muted small">{showP ? "Thu gọn" : "Bài đọc"}</span>
             </button>
-            {showP && passage.text.map((p, k) => <p key={k} className="m0 gp">{p}</p>)}
+            {showP && passage.text.map((p, k) => <p key={k} className="m0 gp"><b className="para-l">{String.fromCharCode(65 + k)}</b> {p}</p>)}
           </div>
         )}
         <div className="panel q-prompt stack8">

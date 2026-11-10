@@ -148,11 +148,21 @@ export function buildIeltsListening(): EQ[] {
   return qs;
 }
 
+// Trộn thứ tự phương án (trừ câu chọn đoạn A–D) để đáp án không dồn vào một vị trí
+function mcQ(pid: string, q: string, opts: string[], a: number, why: string): EQ {
+  const isPara = opts[0].startsWith("Paragraph");
+  const o = isPara ? opts : shuffle(opts);
+  return { k: "choice", sec: "read", pid, label: isPara ? "Đoạn nào chứa thông tin này?" : "Chọn đáp án đúng", show: q, opts: o, ans: o.indexOf(opts[a]), note: why };
+}
+
 export function buildIeltsReading(n = 3): { qs: EQ[]; passages: typeof PASSAGES } {
   const ps = shuffle(PASSAGES).slice(0, n);
+  const TF = ["TRUE", "FALSE", "NOT GIVEN"], YN = ["YES", "NO", "NOT GIVEN"];
   const qs: EQ[] = ps.flatMap((p) => p.qs.map((q): EQ => q.k === "tfng"
-    ? { k: "choice", sec: "read", pid: p.id, label: "TRUE / FALSE / NOT GIVEN", show: q.q, opts: ["TRUE", "FALSE", "NOT GIVEN"], ans: ["TRUE", "FALSE", "NOT GIVEN"].indexOf(q.a), note: q.why }
-    : { k: "choice", sec: "read", pid: p.id, label: "Chọn đáp án đúng", show: q.q, opts: q.opts, ans: q.a, note: q.why }));
+    ? { k: "choice", sec: "read", pid: p.id, label: "TRUE / FALSE / NOT GIVEN (thông tin trong bài)", show: q.q, opts: TF, ans: TF.indexOf(q.a), note: q.why }
+    : q.k === "ynng"
+      ? { k: "choice", sec: "read", pid: p.id, label: "YES / NO / NOT GIVEN (quan điểm của tác giả)", show: q.q, opts: YN, ans: YN.indexOf(q.a), note: q.why }
+      : mcQ(p.id, q.q, q.opts, q.a, q.why)));
   return { qs, passages: ps };
 }
 

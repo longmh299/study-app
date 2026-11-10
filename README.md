@@ -17,7 +17,7 @@ Web app học tiếng Anh và tiếng Trung cho người mất gốc.
 - **Luyện tập**
   - Từ vựng: chọn nghĩa, chọn từ, nghe chọn, nghe và gõ.
   - Bài tập câu: sắp xếp câu, điền từ, nghe chép chính tả.
-  - **Thi thử**: đề HSK 1–6 rút gọn (Nghe, Đọc, Viết; tính giờ; quy ra thang 200/300 điểm, đạt 120/180) và IELTS (Listening nghe điền từ, Reading với bài đọc tự biên soạn và câu True/False/Not Given, quy ra band; Writing Task 1–2 có đếm chữ, đếm giờ, tự chấm theo 4 tiêu chí; Speaking Part 1–3 có hẹn giờ và ghi lại lời nói). Câu hỏi sinh ngẫu nhiên nên mỗi lần là một đề mới.
+  - **Thi thử**: đề HSK 1–6 rút gọn (Nghe, Đọc, Viết; tính giờ; quy ra thang 200/300 điểm, đạt 120/180) và IELTS (Listening nghe điền từ, Reading với 12 bài đọc tự biên soạn, câu True/False/Not Given, Yes/No/Not Given, chọn đoạn A–D và trắc nghiệm, quy ra band; Writing Task 1–2 có đếm chữ, đếm giờ, tự chấm theo 4 tiêu chí; Speaking Part 1–3 có hẹn giờ và ghi lại lời nói). Câu hỏi sinh ngẫu nhiên nên mỗi lần là một đề mới.
 - **Hội thoại**: 7 bài tiếng Anh và 7 bài tiếng Trung. Nghe cả bài, hoặc *nhập vai*: app đọc lời người kia, bạn nói và được chấm phát âm từng chữ.
 - **IELTS Speaking**: Part 1 (8 chủ đề), Part 2 (đồng hồ 1 phút chuẩn bị + 2 phút nói, ghi lại lời nói thành chữ, đếm từ/phút, có bài mẫu), Part 3.
 
