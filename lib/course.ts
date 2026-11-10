@@ -3,8 +3,10 @@ import { DATA, type Card, type Lang } from "./data";
 import type { Lesson } from "./content/course-types";
 import { COURSE_ZH } from "./content/course-zh";
 import { COURSE_ZH2 } from "./content/course-zh2";
+import { COURSE_ZH3 } from "./content/course-zh3";
 import { COURSE_EN } from "./content/course-en";
 import { COURSE_EN2 } from "./content/course-en2";
+import { COURSE_EN3 } from "./content/course-en3";
 import { HSK_LEVEL } from "./content/hsk-index";
 import { show } from "./content/dialogues";
 import { tokEn, type Sentence } from "./sentences";
@@ -19,10 +21,12 @@ export const LEVELS: Record<Lang, Level[]> = {
   zh: [
     { id: "zh1", name: "Sơ cấp 1 · HSK 1", short: "HSK 1", lessons: COURSE_ZH },
     { id: "zh2", name: "Sơ cấp 2 · HSK 2", short: "HSK 2", lessons: COURSE_ZH2 },
+    { id: "zh3", name: "Trung cấp 1 · HSK 3", short: "HSK 3", lessons: COURSE_ZH3 },
   ],
   en: [
     { id: "en1", name: "Sơ cấp 1 · A1", short: "A1", lessons: COURSE_EN },
     { id: "en2", name: "Sơ cấp 2 · A2", short: "A2", lessons: COURSE_EN2 },
+    { id: "en3", name: "Trung cấp 1 · B1", short: "B1", lessons: COURSE_EN3 },
   ],
 };
 
