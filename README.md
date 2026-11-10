@@ -4,8 +4,8 @@ Web app học tiếng Anh và tiếng Trung cho người mất gốc.
 
 **Tính năng**
 - **Giáo trình** (do dự án tự biên soạn)
-  - Tiếng Trung: Sơ cấp 1 (Bài 0 ngữ âm + 12 bài, đủ 150 từ HSK 1), Sơ cấp 2 (10 bài, đủ 147 từ HSK 2), Trung cấp 1 (12 bài, đủ 298 từ HSK 3: 把, 被, bổ ngữ khả năng, bổ ngữ xu hướng, 虽然…但是…, 如果…就…).
-  - Tiếng Anh: Sơ cấp 1 · A1 (Bài 0 phát âm + 12 bài), Sơ cấp 2 · A2 (10 bài) và Trung cấp 1 · B1 (10 bài: hiện tại hoàn thành tiếp diễn, used to, quá khứ hoàn thành, bị động, mệnh đề quan hệ, điều kiện loại 2, câu tường thuật, modal phỏng đoán, cụm động từ, từ nối).
+  - Tiếng Trung: Sơ cấp 1 (Bài 0 ngữ âm + 12 bài, đủ 150 từ HSK 1), Sơ cấp 2 (10 bài, đủ 147 từ HSK 2), Trung cấp 1 (12 bài, đủ 298 từ HSK 3: 把, 被, bổ ngữ khả năng, bổ ngữ xu hướng, 虽然…但是…, 如果…就…), Trung cấp 2 (20 bài, đủ 594 từ HSK 4: 不仅…还, 无论…都, 既然…就, 即使…也, 连…都, 难道, 尽管, 随着…).
+  - Tiếng Anh: Sơ cấp 1 · A1 (Bài 0 phát âm + 12 bài), Sơ cấp 2 · A2 (10 bài), Trung cấp 1 · B1 (10 bài: hiện tại hoàn thành tiếp diễn, used to, quá khứ hoàn thành, bị động, mệnh đề quan hệ, điều kiện loại 2, câu tường thuật, modal phỏng đoán, cụm động từ, từ nối) và Trung cấp 2 · B2 (10 bài: điều kiện loại 3 và hỗn hợp, wish, tương lai hoàn thành, modal hoàn thành, have sth done, câu chẻ, đảo ngữ, mệnh đề phân từ, hedging, V-ing / to V).
   - Mỗi bài gồm: mục tiêu, từ mới (nghe + chấm phát âm), 2–3 điểm ngữ pháp có công thức và ví dụ, hội thoại nhập vai, luyện tập và bài kiểm tra 15 câu.
   - Đạt 80% mới mở bài sau. Khi đạt, từ của bài tự vào lịch ôn hằng ngày. Có tùy chọn mở khóa tất cả cho người đã có nền.
 - **Hôm nay**: thẻ ghi nhớ lặp lại ngắt quãng (kiểu Anki), lấy từ mới từ các khóa bạn bật, có nút *Nói thử* để chấm phát âm.
@@ -133,7 +133,7 @@ supabase/schema.sql   bảng `progress` + Row Level Security
 
 ## Thêm nội dung
 
-- **Giáo trình:** mỗi cấp là một file trong `lib/content/` (course-zh.ts, course-zh2.ts, course-zh3.ts, course-en.ts, course-en2.ts, course-en3.ts…). Danh sách từ HSK 3 nằm riêng trong course-zh3-words.ts, khai báo thứ tự cấp trong `LEVELS` ở `lib/course.ts`. Thêm bài theo đúng cấu trúc các bài sẵn có (kiểu dữ liệu trong `course-types.ts`). Từ tiếng Trung ngoài HSK 1 đánh dấu `1` ở cuối. Câu tiếng Trung viết cách từ bằng dấu cách.
+- **Giáo trình:** mỗi cấp là một file trong `lib/content/` (course-zh.ts, course-zh2.ts, course-zh3.ts, course-zh4.ts, course-en.ts … course-en4.ts). Danh sách từ HSK 3 và HSK 4 nằm riêng trong course-zh3-words.ts và course-zh4-words.ts, khai báo thứ tự cấp trong `LEVELS` ở `lib/course.ts`. Thêm bài theo đúng cấu trúc các bài sẵn có (kiểu dữ liệu trong `course-types.ts`). Từ tiếng Trung ngoài HSK 1 đánh dấu `1` ở cuối. Câu tiếng Trung viết cách từ bằng dấu cách.
 
 - **Nhập môn, Giao tiếp, Cụm từ:** thêm dòng vào **cuối** chủ đề trong `lib/data.ts` hoặc `lib/content/english.ts`. Không xóa hoặc đổi thứ tự dòng cũ, vì tiến độ được lưu theo vị trí.
 - **IELTS Vocabulary, HSK:** tiến độ lưu theo chính từ đó, nên thêm hay sắp xếp lại thoải mái.
