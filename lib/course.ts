@@ -95,3 +95,10 @@ export function isUnlocked(S: State, L: Lang, idx: number) {
 export function nextLesson(S: State, L: Lang): Lesson | null {
   return COURSES[L].find((l) => best(S, l.id) < PASS) ?? null;
 }
+
+/** Bài tổng kết cuối mỗi cấp: lưu điểm ở course["final:<id cấp>"]. */
+export const finalId = (lv: Level) => `final:${lv.id}`;
+
+export function finalOpen(S: State, lv: Level) {
+  return S.set.unlockAll || lv.lessons.every((l) => best(S, l.id) >= PASS);
+}

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { COURSES, LEVELS, PASS, best, isUnlocked, lessonCards, lessonSentences, levelOf, nextLesson, type Lesson } from "@/lib/course";
-import { buildDrill, PRACTICE, TEST, type DQ } from "@/lib/drill";
+import { COURSES, LEVELS, PASS, best, finalId, finalOpen, isUnlocked, lessonCards, lessonSentences, levelOf, nextLesson, type Lesson, type Level } from "@/lib/course";
+import { buildDrill, FINAL, PRACTICE, TEST, type DQ } from "@/lib/drill";
 import { schedule } from "@/lib/srs";
 import { useStore } from "@/lib/store";
 import { meaning } from "@/lib/data";
@@ -15,6 +15,8 @@ export default function Course({ openId, setOpenId }: { openId: string | null; s
   const L = S.lang;
   const list = COURSES[L];
   const lesson = list.find((l) => l.id === openId);
+  const finalLv = LEVELS[L].find((lv) => finalId(lv) === openId);
+  if (finalLv) return <FinalView lv={finalLv} onBack={() => setOpenId(null)} onOpen={setOpenId} />;
   if (lesson) return <LessonView l={lesson} onBack={() => setOpenId(null)} onOpen={setOpenId} />;
 
   const passed = list.filter((l) => best(S, l.id) >= PASS).length;
@@ -68,6 +70,7 @@ export default function Course({ openId, setOpenId }: { openId: string | null; s
                   </li>
                 );
               })}
+              <FinalRow lv={lv} onOpen={() => setOpenId(finalId(lv))} />
             </ol>
           </div>
         );
@@ -243,6 +246,121 @@ function LessonView({ l, onBack, onOpen }: { l: Lesson; onBack: () => void; onOp
         <button type="button" className="btn primary wide" onClick={goNext}>
           Tiếp: {STEPS[STEPS.findIndex((s) => s[0] === step) + 1][1]} →
         </button>
+      )}
+    </section>
+  );
+}
+
+function FinalRow({ lv, onOpen }: { lv: Level; onOpen: () => void }) {
+  const { S } = useStore();
+  const b = best(S, finalId(lv));
+  const open = finalOpen(S, lv);
+  const st = b >= PASS ? "pass" : b >= 0 ? "tried" : open ? "open" : "lock";
+  return (
+    <li>
+      <button type="button" className={`lesson final ${st}`} disabled={!open} onClick={onOpen}>
+        <span className="no num">★</span>
+        <span className="lt">
+          <b>Bài tổng kết {lv.short}</b>
+          <span className="muted small">{FINAL.vocab + FINAL.order + FINAL.cloze} câu gộp cả {lv.lessons.length} bài · {open ? "đã mở" : "mở khi đạt hết các bài"}</span>
+        </span>
+        <span className="ls small">
+          {st === "pass" ? <span className="pill ok">Hoàn thành {b}%</span> : st === "tried" ? <span className="pill lrn">{b}%</span> : st === "lock" ? <span className="muted">Khóa</span> : <span className="pill new">Làm bài</span>}
+        </span>
+      </button>
+    </li>
+  );
+}
+
+function FinalView({ lv, onBack, onOpen }: { lv: Level; onBack: () => void; onOpen: (id: string) => void }) {
+  const { S, update, toast } = useStore();
+  const L = lv.lessons[0].lang;
+  const zh = L === "zh";
+  const id = finalId(lv);
+  const [qs, setQs] = useState<DQ[] | null>(null);
+  const [result, setResult] = useState<{ score: number; wrong: DQ[] } | null>(null);
+  useEffect(() => { window.scrollTo(0, 0); }, [qs, result]);
+
+  const cards = useMemo(() => lv.lessons.flatMap(lessonCards), [lv]);
+  const sents = useMemo(() => lv.lessons.flatMap(lessonSentences), [lv]);
+  const extra = useMemo(() => COURSES[L].filter((x) => !lv.lessons.includes(x)).flatMap(lessonCards), [L, lv]);
+  const b = best(S, id);
+  const lvIdx = LEVELS[L].indexOf(lv);
+  const nextLv = LEVELS[L][lvIdx + 1];
+
+  const finish = (score: number, wrong: DQ[]) => {
+    setQs(null);
+    setResult({ score, wrong });
+    update((s) => { s.course[id] = Math.max(s.course[id] ?? -1, score); });
+    if (score >= PASS) toast(`Chúc mừng! Bạn đã hoàn thành ${lv.name}.`);
+  };
+
+  if (qs) return <section className="view"><Drill qs={qs} lang={L} title={`Tổng kết ${lv.short}`} onDone={finish} onQuit={() => setQs(null)} /></section>;
+
+  // Bài nào sai nhiều nhất thì gợi ý ôn lại
+  const weak = result ? Object.entries(result.wrong.reduce<Record<string, number>>((m, q) => {
+    const lid = "c" in q ? q.c.topic : q.s.id.split(":")[0];
+    m[lid] = (m[lid] ?? 0) + 1;
+    return m;
+  }, {})).sort((a, b2) => b2[1] - a[1]).slice(0, 3).map(([lid, n]) => ({ l: lv.lessons.find((x) => x.id === lid), n })).filter((x) => x.l) : [];
+
+  return (
+    <section className="view">
+      <div className="row between">
+        <button type="button" className="btn" onClick={onBack}>← Giáo trình</button>
+        {b >= 0 && <span className={`pill ${b >= PASS ? "ok" : "lrn"}`}>Điểm cao nhất {b}%</span>}
+      </div>
+      <div className="lesson-head">
+        <span className="label">Bài tổng kết</span>
+        <h2 className="h2 lesson-title">{lv.name}</h2>
+        <div className="muted">{lv.lessons.length} bài · {cards.length} từ · toàn bộ ngữ pháp và hội thoại của cấp</div>
+      </div>
+      {result ? (
+        <div className="stack12">
+          <div className="panel done">
+            <div className="seal num score">{result.score}%</div>
+            <h2 className="h2">{result.score >= PASS ? `Bạn đã hoàn thành ${lv.short}!` : `Chưa đạt, cần ${PASS}%`}</h2>
+            <p className="muted m0">{result.score >= PASS ? "Kiến thức của cấp này đã khá vững. Từ vựng vẫn được nhắc ôn đều đặn ở tab Hôm nay." : "Ôn lại những bài bên dưới rồi làm lại nhé."}</p>
+            <div className="row center">
+              <button type="button" className="btn" onClick={() => { setResult(null); setQs(buildDrill(L, cards, extra, sents, FINAL)); }}>Làm lại</button>
+              {result.score >= PASS && nextLv && <button type="button" className="btn primary" onClick={() => onOpen(nextLv.lessons[0].id)}>Sang {nextLv.short} · Bài {nextLv.lessons[0].no}</button>}
+            </div>
+          </div>
+          {weak.length > 0 && (
+            <div className="panel stack8">
+              <span className="label">Nên ôn lại</span>
+              {weak.map(({ l, n }) => (
+                <button type="button" key={l!.id} className="lesson open" onClick={() => onOpen(l!.id)}>
+                  <span className="no num">{l!.no}</span>
+                  <span className="lt"><b className={zh ? "han-mix" : undefined}>{l!.title}</b><span className="muted small">{l!.sub}</span></span>
+                  <span className="ls small"><span className="pill lrn">sai {n} câu</span></span>
+                </button>
+              ))}
+            </div>
+          )}
+          {result.wrong.length > 0 && (
+            <div className="panel stack8">
+              <span className="label">Câu làm sai</span>
+              {result.wrong.map((q, k) => (
+                <div key={k} className="wrong-row">
+                  {"c" in q
+                    ? <><b className={zh ? "han-inline" : undefined}>{q.c.w}</b> {q.c.p} = {meaning(q.c)}</>
+                    : <><b className={zh ? "han-inline" : undefined}>{q.s.t}</b> <span className="muted">{q.s.vi}</span></>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="panel stack12">
+          <span className="label">Cách làm</span>
+          <ul className="steps">
+            <li>{FINAL.vocab + FINAL.order + FINAL.cloze} câu lấy ngẫu nhiên từ tất cả các bài của cấp: chọn nghĩa, chọn từ, nghe, sắp xếp câu, điền từ.</li>
+            <li>Đạt {PASS}% là hoàn thành cấp. Mỗi lần làm là một bộ câu hỏi mới.</li>
+            <li>Làm xong, app chỉ ra những bài bạn sai nhiều nhất để ôn lại.</li>
+          </ul>
+          <button type="button" className="btn primary wide" onClick={() => setQs(buildDrill(L, cards, extra, sents, FINAL))}>Bắt đầu bài tổng kết</button>
+        </div>
       )}
     </section>
   );

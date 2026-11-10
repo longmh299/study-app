@@ -8,14 +8,16 @@ Web app học tiếng Anh và tiếng Trung cho người mất gốc.
   - Tiếng Anh: Sơ cấp 1 · A1 (Bài 0 phát âm + 12 bài), Sơ cấp 2 · A2 (10 bài), Trung cấp 1 · B1 (10 bài: hiện tại hoàn thành tiếp diễn, used to, quá khứ hoàn thành, bị động, mệnh đề quan hệ, điều kiện loại 2, câu tường thuật, modal phỏng đoán, cụm động từ, từ nối) và Trung cấp 2 · B2 (10 bài: điều kiện loại 3 và hỗn hợp, wish, tương lai hoàn thành, modal hoàn thành, have sth done, câu chẻ, đảo ngữ, mệnh đề phân từ, hedging, V-ing / to V) và Cao cấp 1 · C1 (10 bài: nhấn mạnh, điều kiện đảo ngữ, giả định cách, danh từ hóa, tương lai trong quá khứ, modal nâng cao, tỉnh lược, từ nối lập trường, mệnh đề nhượng bộ, collocation và thành ngữ).
   - Mỗi bài gồm: mục tiêu, từ mới (nghe + chấm phát âm), 2–3 điểm ngữ pháp có công thức và ví dụ, hội thoại nhập vai, luyện tập và bài kiểm tra 15 câu.
   - Đạt 80% mới mở bài sau. Khi đạt, từ của bài tự vào lịch ôn hằng ngày. Có tùy chọn mở khóa tất cả cho người đã có nền.
+  - Cuối mỗi cấp có **bài tổng kết** 40 câu gộp cả cấp, đạt 80% là hoàn thành cấp; app chỉ ra những bài sai nhiều nhất để ôn lại.
 - **Hôm nay**: thẻ ghi nhớ lặp lại ngắt quãng (kiểu Anki), lấy từ mới từ các khóa bạn bật, có nút *Nói thử* để chấm phát âm.
 - **Khóa học**
-  - Tiếng Trung: Nhập môn, HSK 1–6 (4.991 từ). Mỗi từ có pinyin và âm Hán Việt. HSK 1–3 có nghĩa tiếng Việt, HSK 4–6 có nghĩa tiếng Anh.
+  - Tiếng Trung: Nhập môn, HSK 1–6 (4.991 từ). Mỗi từ có pinyin và âm Hán Việt. HSK 1–5 có nghĩa tiếng Việt, HSK 6 có nghĩa tiếng Anh.
   - Tiếng Anh: Nhập môn (IPA), Giao tiếp (10 tình huống), IELTS Vocabulary (8 chủ đề, có câu ví dụ), Cụm từ Writing & Speaking.
   - Có tìm kiếm theo chữ Hán, pinyin, Hán Việt hoặc nghĩa (gõ không dấu cũng được).
 - **Luyện tập**
   - Từ vựng: chọn nghĩa, chọn từ, nghe chọn, nghe và gõ.
   - Bài tập câu: sắp xếp câu, điền từ, nghe chép chính tả.
+  - **Thi thử**: đề HSK 1–6 rút gọn (Nghe, Đọc, Viết; tính giờ; quy ra thang 200/300 điểm, đạt 120/180) và IELTS (Listening nghe điền từ, Reading với bài đọc tự biên soạn và câu True/False/Not Given, quy ra band; Writing Task 1–2 có đếm chữ, đếm giờ, tự chấm theo 4 tiêu chí; Speaking Part 1–3 có hẹn giờ và ghi lại lời nói). Câu hỏi sinh ngẫu nhiên nên mỗi lần là một đề mới.
 - **Hội thoại**: 7 bài tiếng Anh và 7 bài tiếng Trung. Nghe cả bài, hoặc *nhập vai*: app đọc lời người kia, bạn nói và được chấm phát âm từng chữ.
 - **IELTS Speaking**: Part 1 (8 chủ đề), Part 2 (đồng hồ 1 phút chuẩn bị + 2 phút nói, ghi lại lời nói thành chữ, đếm từ/phút, có bài mẫu), Part 3.
 

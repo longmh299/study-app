@@ -13,6 +13,7 @@ export type DQ =
 export interface DrillPlan { vocab: number; order: number; cloze: number }
 export const PRACTICE: DrillPlan = { vocab: 6, order: 3, cloze: 3 };
 export const TEST: DrillPlan = { vocab: 8, order: 4, cloze: 3 };
+export const FINAL: DrillPlan = { vocab: 24, order: 8, cloze: 8 };
 
 /** cards: từ của bài; extra: từ của các bài khác để làm phương án nhiễu. */
 export function buildDrill(lang: Lang, cards: Card[], extra: Card[], sents: Sentence[], plan: DrillPlan, vocabOnly = false): DQ[] {
