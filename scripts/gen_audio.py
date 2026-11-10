@@ -53,6 +53,7 @@ def say_text(lang: str, text: str) -> str:
     if lang != "en":
         return text
     text = re.sub(r"\s/\s", ". ", text)
+    text = text.replace("→", ".").replace("“", "").replace("”", "")
     # Năm 1900–2099 đọc theo cặp: 2023 → twenty twenty-three
     text = re.sub(r"\b(19|20)(\d\d)\b", lambda m: f"{two(int(m.group(1)))} {'hundred' if m.group(2) == '00' else ('oh ' + ONES[int(m.group(2))] if m.group(2)[0] == '0' else two(int(m.group(2))))}", text)
     text = re.sub(r"\b\d{1,2}\b", lambda m: two(int(m.group(0))), text)
