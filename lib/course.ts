@@ -5,10 +5,12 @@ import { COURSE_ZH } from "./content/course-zh";
 import { COURSE_ZH2 } from "./content/course-zh2";
 import { COURSE_ZH3 } from "./content/course-zh3";
 import { COURSE_ZH4 } from "./content/course-zh4";
+import { COURSE_ZH5 } from "./content/course-zh5";
 import { COURSE_EN } from "./content/course-en";
 import { COURSE_EN2 } from "./content/course-en2";
 import { COURSE_EN3 } from "./content/course-en3";
 import { COURSE_EN4 } from "./content/course-en4";
+import { COURSE_EN5 } from "./content/course-en5";
 import { HSK_LEVEL } from "./content/hsk-index";
 import { show } from "./content/dialogues";
 import { tokEn, type Sentence } from "./sentences";
@@ -25,12 +27,14 @@ export const LEVELS: Record<Lang, Level[]> = {
     { id: "zh2", name: "Sơ cấp 2 · HSK 2", short: "HSK 2", lessons: COURSE_ZH2 },
     { id: "zh3", name: "Trung cấp 1 · HSK 3", short: "HSK 3", lessons: COURSE_ZH3 },
     { id: "zh4", name: "Trung cấp 2 · HSK 4", short: "HSK 4", lessons: COURSE_ZH4 },
+    { id: "zh5", name: "Cao cấp 1 · HSK 5 (phần 1)", short: "HSK 5·1", lessons: COURSE_ZH5 },
   ],
   en: [
     { id: "en1", name: "Sơ cấp 1 · A1", short: "A1", lessons: COURSE_EN },
     { id: "en2", name: "Sơ cấp 2 · A2", short: "A2", lessons: COURSE_EN2 },
     { id: "en3", name: "Trung cấp 1 · B1", short: "B1", lessons: COURSE_EN3 },
     { id: "en4", name: "Trung cấp 2 · B2", short: "B2", lessons: COURSE_EN4 },
+    { id: "en5", name: "Cao cấp 1 · C1", short: "C1", lessons: COURSE_EN5 },
   ],
 };
 
