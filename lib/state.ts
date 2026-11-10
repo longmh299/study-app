@@ -32,6 +32,7 @@ export const DEF: State = {
   u: 0,
 };
 
+// Giữ nguyên khóa cũ để không mất tiến độ đã lưu trên máy
 const LKEY = "vo-song-ngu-v1";
 
 export function normalize(d: unknown): State {

@@ -1,4 +1,4 @@
--- Vở Song Ngữ: chạy file này 1 lần trong Supabase > SQL Editor.
+-- Study App: chạy file này 1 lần trong Supabase > SQL Editor.
 -- Mỗi người dùng chỉ có đúng 1 dòng chứa toàn bộ tiến độ (JSON),
 -- nên dữ liệu rất nhỏ, nằm thoải mái trong gói miễn phí.
 

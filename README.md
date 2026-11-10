@@ -1,4 +1,4 @@
-# Vở Song Ngữ
+# Study App
 
 Web app học tiếng Anh và tiếng Trung cho người mất gốc.
 
@@ -64,21 +64,21 @@ Mở http://localhost:3000
 ```bash
 git init
 git add .
-git commit -m "Vở Song Ngữ"
+git commit -m "Study App"
 git branch -M main
-git remote add origin https://github.com/<tên-bạn>/vo-song-ngu.git
+git remote add origin https://github.com/<tên-bạn>/study-app.git
 git push -u origin main
 ```
 
-(Tạo repo trống tên `vo-song-ngu` trên GitHub trước. Để chế độ Private cũng được.)
+(Tạo repo trống tên `study-app` trên GitHub trước. Để chế độ Private cũng được.)
 
 ## Bước 4: Deploy lên Vercel
 
-1. Vào https://vercel.com, đăng nhập bằng GitHub, bấm **Add New › Project**, chọn repo `vo-song-ngu`.
+1. Vào https://vercel.com, đăng nhập bằng GitHub, bấm **Add New › Project**, chọn repo `study-app`.
 2. Mở phần **Environment Variables** và thêm:
    - `NEXT_PUBLIC_SUPABASE_URL` = Project URL
    - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` = Publishable key
-3. Bấm **Deploy**. Khoảng 1 phút sau bạn có link dạng `https://vo-song-ngu.vercel.app`.
+3. Bấm **Deploy**. Khoảng 1 phút sau bạn có link dạng `https://study-app.vercel.app`.
 4. (Nên làm) Quay lại Supabase, vào **Authentication › URL Configuration**, đặt **Site URL** bằng link Vercel ở trên.
 
 Từ giờ, mỗi lần `git push` thì Vercel tự deploy lại.

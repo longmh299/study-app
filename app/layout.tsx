@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vở Song Ngữ",
+  title: "Study App",
   description: "Học tiếng Anh và tiếng Trung từ con số 0: thẻ ghi nhớ lặp lại ngắt quãng, phát âm, luyện nghe.",
-  appleWebApp: { capable: true, title: "Vở Song Ngữ", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "Study App", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 // Cho phép "Thêm vào màn hình chính" trên điện thoại, mở như app thật.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Vở Song Ngữ",
-    short_name: "Song Ngữ",
+    name: "Study App",
+    short_name: "Study App",
     description: "Học tiếng Anh và tiếng Trung từ con số 0",
     start_url: "/",
     display: "standalone",

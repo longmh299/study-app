@@ -47,7 +47,7 @@ function Shell() {
       <div className="wrap">
         <header className="top">
           <div className="brand">
-            <h1>Vở Song Ngữ</h1>
+            <h1>Study App</h1>
             {status && (
               <button type="button" className={`sync-chip sync-${user ? sync : "idle"}`} onClick={() => go("settings")}>
                 {status}
